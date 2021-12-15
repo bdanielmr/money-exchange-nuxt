@@ -1,101 +1,152 @@
 <template>
-  <div class="form-container">
-    <div class="form-right-panel">
-      <div class="wrapper">
-        <h1 class="padded-title">
-          <span>El mejor </span><span>tipo de cambio </span>
-        </h1>
-        <h1 class="padded-sub-title">
-          <span>para cambiar dolares y soles online en Peru </span>
-        </h1>
-      </div>
-    </div>
-    <div class="form-left-panel">
-      <InputCoin
-        v-for="(input, index) in inputsForm"
-        :key="index"
-        :text-current="input.current"
-        :text-label="input.label"
-      />
-    </div>
+  <div class="form-container-label">
+    <TabCoin :key="tab" :tab-show="!tab" />
+    <div
+      :class="`${rotation && 'rotating'}` + ` rotation-icon`"
+      @click="handleRotation"
+    ></div>
+    <InputCoin
+      v-for="input in inputsForm"
+      :key="input.current + input.label"
+      class="form-input-coin"
+      :text-current="input.current"
+      :text-label="input.label"
+      :current-icon="input.icon"
+    />
+    <button class="button-form-coin" @click="handleButtonChange">
+      Iniciar Operacion
+    </button>
   </div>
 </template>
 
 <script>
 import InputCoin from '../InputCoin/InputCoin.vue'
+import TabCoin from '../TabCoin/TabCoin.vue'
 export default {
   name: 'FormCoin',
-  components: { InputCoin },
+  components: { InputCoin, TabCoin },
   data() {
     return {
       inputsForm: [
         {
           current: 'Dolares',
           label: 'Enviar',
+          icon: '$',
         },
         {
           current: 'Soles',
           label: 'Recibir',
+          icon: 'S/',
         },
       ],
+      rotation: false,
+      tab: false,
     }
+  },
+  watch: {
+    rotation() {
+      setTimeout(() => {
+        this.rotation = false
+      }, 800)
+    },
+  },
+  methods: {
+    handleButtonChange() {},
+    handleRotation() {
+      const auxInp = []
+      for (let i = this.inputsForm?.length - 1; i >= 0; i--) {
+        if (this.inputsForm[i].label === 'Enviar') {
+          this.inputsForm[i].label = 'Recibir'
+        } else {
+          this.inputsForm[i].label = 'Enviar'
+        }
+        auxInp.push({ ...this.inputsForm[i] })
+      }
+      this.inputsForm = auxInp
+      this.rotation = true
+      this.tab = !this.tab
+    },
   },
 }
 </script>
 <style lang="sass">
-.form-container
-  width: 100%
-  position: relative
-  height: 100vh
-  display: grid
-  grid-template-columns: 1fr 1fr
-  align-items: center
-  justify-content: center
-  @media (max-width: 800px)
-    height: 100%
-    grid-template-columns: 1fr
-
-.form-right-panel
-  display: flex
-  align-items: center
-  flex-direction: column
+@import url("https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css")
+.form-container-label
+    position: relative
+    background: #fff
+    display: flex
+    flex-direction: column
+    align-items: center
     justify-content: center
-  @media (max-width: 800px)
-.form-left-panel
-  display: flex
+    height: 300px
+    width: 45%
+    border-radius: 6px
+.form-input-coin
+    margin: 15px 0
+.rotating
+    width: 20px
+    -webkit-animation: rotating 0.4s linear
+    -moz-animation: rotating 0.4s linear
+    -ms-animation: rotating 0.4s linear
+    -o-animation: rotating 0.4s linear
+    animation: rotating 0.4s linear
 
-  align-items: center
-  justify-content: center
-  flex-direction: column
+.rotation-icon
+    position: absolute
+    width: 30px
+    height: 30px
+    cursor: pointer
+    color: white
+    background: #6E46E6
+    padding: 10px
+    border-radius: 50%
+    display: flex
+    align-items: center
+    justify-content: center
+    top:44%
+.rotation-icon::before
+  font-family: fontAwesome
+  font-size: 32px
+  content: "\f021"
 
-  @media (max-width: 800px)
-.wrapper
-  width: 250px
-  margin: 50px auto
+.button-form-coin
+    width: 50%
+    height: 35px
+    border-radius: 6px
+    border: none
+    background: #6E46E6
+    color: #fff
+.button-form-coin:hover
+     background: #5a3cb5
+     cursor: pointer
+@keyframes rotating
+
+    from
+
+        transform: rotate(0deg)
+        -o-transform: rotate(0deg)
+        -ms-transform: rotate(0deg)
+        -moz-transform: rotate(0deg)
+        -webkit-transform: rotate(0deg)
+
+    to
+
+        transform: rotate(360deg)
+        -o-transform: rotate(360deg)
+        -ms-transform: rotate(360deg)
+        -moz-transform: rotate(360deg)
+        -webkit-transform: rotate(360deg)
 
 
-.padded-title
-  font-size: 2rem
-  line-height: 1.1
-  margin: 0
+@-webkit-keyframes rotating
 
-.padded-title span
-  display: inline-block
-  margin:0
-  color: #fff
+    from
 
-  padding: 8px 5px 0
-  word-spacing: 0px
-  line-height: 0.4
-.padded-sub-title
-  font-size: 1.2rem
-  line-height: 1
-  margin: 0
-.padded-sub-title span
-  display: inline-block
-  color: #fff
+        transform: rotate(0deg)
+        -webkit-transform: rotate(0deg)
 
-  padding: 8px 5px 0
-  word-spacing: 0px
-  line-height: 1
+    to
+
+        transform: rotate(360deg)
+        -webkit-transform: rotate(360deg)
 </style>
