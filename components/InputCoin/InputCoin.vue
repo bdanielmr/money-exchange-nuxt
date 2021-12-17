@@ -7,7 +7,7 @@
       <p>{{ labelTextInput }}</p>
       <div>
         <span>{{ iconCurrentInput }}</span>
-        <input />
+        <input :disabled="disable" type="text" :name="name" />
       </div>
     </div>
   </label>
@@ -29,6 +29,14 @@ export default {
       type: String,
       default: '',
     },
+    name: {
+      type: String,
+      default: '',
+    },
+    disable: {
+      type: Boolean,
+      default: false,
+    },
   },
   data() {
     return {
@@ -37,7 +45,6 @@ export default {
       iconCurrent: this.currentIcon,
     }
   },
-
   computed: {
     currentTextInput() {
       return this.currentText

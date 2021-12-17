@@ -1,5 +1,5 @@
 <template>
-  <div class="form-container-label">
+  <form class="form-container-label" @submit.prevent="handleButtonChange">
     <TabCoin :key="tab" :tab-show="!tab" />
     <div
       :class="`${rotation && 'rotating'}` + ` rotation-icon`"
@@ -12,11 +12,10 @@
       :text-current="input.current"
       :text-label="input.label"
       :current-icon="input.icon"
+      :disable="input.disable"
     />
-    <button class="button-form-coin" @click="handleButtonChange">
-      Iniciar Operacion
-    </button>
-  </div>
+    <button type="submit" class="button-form-coin">Iniciar Operacion</button>
+  </form>
 </template>
 
 <script>
@@ -32,11 +31,13 @@ export default {
           current: 'Dolares',
           label: 'Enviar',
           icon: '$',
+          disable: false,
         },
         {
           current: 'Soles',
           label: 'Recibir',
           icon: 'S/',
+          disable: true,
         },
       ],
       rotation: false,
@@ -51,7 +52,11 @@ export default {
     },
   },
   methods: {
-    handleButtonChange() {},
+    handleButtonChange(submitEvent) {
+      const request = {}
+
+      console.log(request)
+    },
     handleRotation() {
       const auxInp = []
       for (let i = this.inputsForm?.length - 1; i >= 0; i--) {
@@ -59,6 +64,11 @@ export default {
           this.inputsForm[i].label = 'Recibir'
         } else {
           this.inputsForm[i].label = 'Enviar'
+        }
+        if (this.inputsForm[i].disable) {
+          this.inputsForm[i].disable = false
+        } else {
+          this.inputsForm[i].disable = true
         }
         auxInp.push({ ...this.inputsForm[i] })
       }

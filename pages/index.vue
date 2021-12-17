@@ -1,5 +1,7 @@
 <template>
-  <SplashCoin />
+  <div>
+    <SplashCoin />
+  </div>
 </template>
 
 <script>

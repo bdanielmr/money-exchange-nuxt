@@ -17,10 +17,44 @@
 </template>
 
 <script>
+import { mapState } from 'vuex'
 import FormCoin from '~/components/FormCoin/FormCoin.vue'
 export default {
-  components: { FormCoin },
   name: 'HomePage',
+  components: { FormCoin },
+  fetchOnServer: false,
+  async fetch({ store, error }) {
+    try {
+      await store.dispatch('store/fetchCurrents')
+      console.log('fetxh correct')
+    } catch (e) {
+      error({
+        statusCode: 503,
+        message: 'Unable to fetch rates',
+      })
+    }
+  },
+  computed: mapState({
+    currents: (state) => {
+      console.log('ver home', state.store.currents)
+      return state.store.currents
+    },
+  }),
+  created() {
+    setInterval(this.reloadFetch, 6000)
+  },
+  methods: {
+    async reloadFetch() {
+      try {
+        await this.$store.dispatch('store/fetchCurrents')
+      } catch (e) {
+        this.$store.error({
+          statusCode: 503,
+          message: 'Unable to fetch rates',
+        })
+      }
+    },
+  },
 }
 </script>
 <style lang="sass">

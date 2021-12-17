@@ -8,7 +8,7 @@
         }"
       >
         Dolar compra
-        <span>3.999</span>
+        <span>{{ currents.purchase_price }}</span>
       </p>
     </div>
     <div>
@@ -19,13 +19,14 @@
         }"
       >
         Dolar venta
-        <span>4.999</span>
+        <span>{{ currents.sale_price }}</span>
       </p>
     </div>
   </div>
 </template>
 
 <script>
+import { mapState } from 'vuex'
 export default {
   name: 'TabCoin',
   props: {
@@ -34,11 +35,17 @@ export default {
       default: true,
     },
   },
+
   data() {
     return {
       showTab: this.tabShow,
     }
   },
+  computed: mapState({
+    currents: (state) => {
+      return state.store.currents
+    },
+  }),
 }
 </script>
 <style lang="sass" scoped>
@@ -60,6 +67,4 @@ export default {
             color: #717191
             span
                 font-weight: 800
-
-        span
 </style>
