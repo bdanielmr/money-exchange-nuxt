@@ -39,7 +39,7 @@ export default {
     },
   }),
   created() {
-    setInterval(this.reloadFetch, 6000)
+    setInterval(this.reloadFetch, 60000)
   },
   methods: {
     async reloadFetch() {
