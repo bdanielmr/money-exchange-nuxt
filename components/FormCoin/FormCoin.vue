@@ -7,18 +7,21 @@
     ></div>
     <InputCoin
       v-for="input in inputsForm"
-      :key="input.current + input.label"
+      :key="input.current + input.label + input.wallet.exchange"
       class="form-input-coin"
+      :label-input="input.disable ? input.wallet.exchange : input.wallet.target"
       :text-current="input.current"
       :text-label="input.label"
       :current-icon="input.icon"
       :disable="input.disable"
+      :name="input.current"
     />
     <button type="submit" class="button-form-coin">Iniciar Operacion</button>
   </form>
 </template>
 
 <script>
+import { mapState } from 'vuex'
 import InputCoin from '../InputCoin/InputCoin.vue'
 import TabCoin from '../TabCoin/TabCoin.vue'
 export default {
@@ -32,17 +35,35 @@ export default {
           label: 'Enviar',
           icon: '$',
           disable: false,
+          wallet: {
+            target: '',
+            exchange: '',
+          },
         },
         {
           current: 'Soles',
           label: 'Recibir',
           icon: 'S/',
           disable: true,
+          wallet: {
+            target: '',
+            exchange: '',
+          },
         },
       ],
       rotation: false,
       tab: false,
     }
+  },
+  computed: {
+    inputCurrent() {
+      return this.$store.state.currentConverter?.wallet?.inputCurrent
+    },
+    ...mapState({
+      currentConverter: (state) => {
+        return state.store.currentConverter
+      },
+    }),
   },
   watch: {
     rotation() {
@@ -51,13 +72,26 @@ export default {
       }, 800)
     },
   },
+
   methods: {
     handleButtonChange(submitEvent) {
-      const request = {}
+      this.inputsForm = this.inputsForm.map((inpu, index) => {
+        return {
+          ...inpu,
+          wallet: this.$store.state.store.currentConverter.wallet,
+        }
+      })
 
-      console.log(request)
+      this.$store.commit('store/DONE')
     },
     handleRotation() {
+      this.$store.commit('store/CHANGE')
+      this.inputsForm = this.inputsForm.map((inpu, index) => {
+        return {
+          ...inpu,
+          wallet: this.$store.state.store.currentConverter.wallet,
+        }
+      })
       const auxInp = []
       for (let i = this.inputsForm?.length - 1; i >= 0; i--) {
         if (this.inputsForm[i].label === 'Enviar') {

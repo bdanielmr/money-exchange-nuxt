@@ -7,7 +7,13 @@
       <p>{{ labelTextInput }}</p>
       <div>
         <span>{{ iconCurrentInput }}</span>
-        <input :disabled="disable" type="text" :name="name" />
+        <input
+          v-model="inputLabel"
+          :disabled="disable"
+          type="text"
+          :name="name"
+          @keyup="addConverter"
+        />
       </div>
     </div>
   </label>
@@ -37,12 +43,17 @@ export default {
       type: Boolean,
       default: false,
     },
+    labelInput: {
+      type: String,
+      default: '',
+    },
   },
   data() {
     return {
       currentText: this.textCurrent,
       labelText: this.textLabel,
       iconCurrent: this.currentIcon,
+      inputLabel: this.labelInput?.toString(),
     }
   },
   computed: {
@@ -54,6 +65,18 @@ export default {
     },
     iconCurrentInput() {
       return this.iconCurrent
+    },
+    currentConverter() {
+      return this.$store.state.currentConverter
+    },
+  },
+  methods: {
+    handleValue(e) {},
+    addConverter(e) {
+      this.$store.commit('store/CONVERTER', {
+        target: e.target.value,
+        inputCurrent: this.name,
+      })
     },
   },
 }

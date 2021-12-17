@@ -26,7 +26,6 @@ export default {
   async fetch({ store, error }) {
     try {
       await store.dispatch('store/fetchCurrents')
-      console.log('fetxh correct')
     } catch (e) {
       error({
         statusCode: 503,
@@ -36,7 +35,6 @@ export default {
   },
   computed: mapState({
     currents: (state) => {
-      console.log('ver home', state.store.currents)
       return state.store.currents
     },
   }),
