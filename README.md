@@ -1,5 +1,12 @@
 # money-exchange-nuxt
 
+app made with nuxt, vue and vuex that calculate exchange money
+https://money-exchange-nuxt.netlify.app/
+
+![Alt text](https://i.imgur.com/5wpSyfb.png)
+![Alt text](https://i.imgur.com/MzIyKQi.png)
+![Alt text](https://i.imgur.com/SGLJ9K4.png)
+
 ## Build Setup
 
 ```bash

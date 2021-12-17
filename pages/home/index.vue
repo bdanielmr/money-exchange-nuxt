@@ -107,6 +107,7 @@ html, body
   word-spacing: 0px
   line-height: 0.4
 .padded-sub-title
+  width: 90%
   font-size: 1.2rem
   line-height: 1
   margin: 0
