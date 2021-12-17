@@ -70,7 +70,8 @@ html, body
   align-items: center
   justify-content: center
   @media (max-width: 800px)
-    height: 100%
+    width: 100%
+    height: 50vh
     grid-template-columns: 1fr
 
 .form-right-panel
@@ -88,12 +89,12 @@ html, body
 
   @media (max-width: 800px)
 .wrapper
-  width: 250px
+  width: 320px
   margin: 50px auto
 
 
 .padded-title
-  font-size: 2rem
+  font-size: 3rem
   line-height: 1.1
   margin: 0
 

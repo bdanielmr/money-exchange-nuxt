@@ -71,7 +71,6 @@ export default {
     },
   },
   methods: {
-    handleValue(e) {},
     addConverter(e) {
       this.$store.commit('store/CONVERTER', {
         target: e.target.value,
@@ -85,8 +84,8 @@ export default {
 <style lang="sass" scoped>
 
 .input-form-panel
-    width: 250px
-    height: 30px
+    width: 300px
+    height: 35px
     border-radius: 6px
     border: 1px solid #6E46E6
     display: flex
@@ -96,8 +95,8 @@ export default {
     background: #F3F3F6
 
     input
-        width: 40%
-        height: 30px
+        width: 30%
+        height: 35px
         padding: 0px 0
         border: none
 .container-form
@@ -110,10 +109,13 @@ export default {
       color: #6E46E6
 
 .input-container-form
+    width: 100%
     text-align: right
     background: #fff
     border-top-right-radius: 6px
     p
       padding: 0px 5px
-      margin: 0
+      margin: 4px 10% 0px 0px
+      font-size: 14px
+      color:#717191
 </style>

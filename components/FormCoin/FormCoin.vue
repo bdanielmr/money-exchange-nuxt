@@ -123,8 +123,11 @@ export default {
     align-items: center
     justify-content: center
     height: 300px
-    width: 45%
+    width: 500px
     border-radius: 6px
+    @media (max-width: 800px)
+      width: 100%
+      border-radius: 0
 .form-input-coin
     margin: 15px 0
 .rotating
